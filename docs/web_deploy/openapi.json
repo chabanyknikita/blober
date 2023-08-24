@@ -1,0 +1,458 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "blob-svc",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "https://api.demo.tokend.io",
+      "description": "TokenD Developer Environment"
+    }
+  ],
+  "paths": {
+    "/integrations/blobs-svc": {
+      "post": {
+        "tags": [
+          "Blob"
+        ],
+        "summary": "Blob",
+        "description": "Create blob\n\n🔒 An admin's signature is needed\n",
+        "operationId": "createBlob",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": true,
+                      "$ref": "#/components/schemas/Blob"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blob creation not allowed",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to save blob",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": true,
+                    "$ref": "#/components/schemas/BlobRequest"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": true,
+                    "$ref": "#/components/schemas/BlobRequest"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "get": {
+        "tags": [
+          "Blob"
+        ],
+        "summary": "All Blobs",
+        "description": "\n🔒 An admin's signature is needed for private blobs\n",
+        "operationId": "getAllBlob",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Blob"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "blobs not founded",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to get all blobs",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/blobs-svc/{blob}": {
+      "parameters": [
+        {
+          "name": "blob",
+          "in": "path",
+          "description": "Blob identifier",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Blob"
+        ],
+        "summary": "Blob",
+        "description": "\n🔒 An admin's signature is needed for private blobs\n",
+        "operationId": "getBlob",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Blob"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "blob not found",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to get blob",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Blob"
+        ],
+        "summary": "Remove Blob",
+        "description": " \n\n🔒 An admin's signature is needed\n",
+        "operationId": "deleteBlob",
+        "responses": {
+          "204": {
+            "description": "Blob deleted"
+          },
+          "400": {
+            "description": "invalid blob id",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "failed to get blob or failed to mark blob deleted",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Blob": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BlobKey"
+          },
+          {
+            "type": "object",
+            "required": [
+              "attributes"
+            ],
+            "properties": {
+              "attributes": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "description": "arbitrary text",
+                    "type": "string",
+                    "example": "foobar"
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "BlobKey": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "blah"
+          },
+          "type": {
+            "type": "string",
+            "description": "blob type",
+            "example": "asset_description",
+            "enum": [
+              "asset_description",
+              "fund_overview",
+              "fund_update",
+              "nav_update",
+              "fund_document",
+              "alpha",
+              "bravo",
+              "charlie",
+              "delta",
+              "token_terms",
+              "token_metrics",
+              "kyc_form",
+              "kyc_id_document",
+              "kyc_poa",
+              "identity_mind_reject"
+            ]
+          }
+        }
+      },
+      "BlobRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BlobKey"
+          },
+          {
+            "type": "object",
+            "required": [
+              "attributes",
+              "relationships"
+            ],
+            "properties": {
+              "attributes": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "description": "arbitrary text",
+                    "type": "string",
+                    "example": "foobar"
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              },
+              "relationships": {
+                "type": "object",
+                "required": [
+                  "owner"
+                ],
+                "properties": {
+                  "owner": {
+                    "description": "blob owner",
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/OwnerKey"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Errors": {
+        "description": "Standard JSON:API error",
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "properties": {
+          "errors": {
+            "type": "array",
+            "description": "Non-empty array of errors occurred during the request processing",
+            "items": {
+              "type": "object",
+              "required": [
+                "title",
+                "status"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Short, human-readable summary of the problem",
+                  "example": "Bad Request"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Human-readable explanation specific to this occurrence of the problem",
+                  "example": "Request body was expected"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code applicable to this problem",
+                  "example": 400,
+                  "enum": [
+                    400,
+                    401,
+                    403,
+                    404,
+                    409,
+                    500
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "OwnerKey": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "pageLimitParam": {
+        "in": "query",
+        "name": "page[limit]",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 15,
+          "description": "Numbers of items per page to return."
+        }
+      },
+      "pageNumberParam": {
+        "in": "query",
+        "name": "page[number]",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The number of a page to return."
+      },
+      "sortingParam": {
+        "in": "query",
+        "name": "page[order]",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "desc",
+          "description": "Order of records on the page. If sortingParam is not specified, order of records is by default sorted by ID."
+        }
+      }
+    }
+  }
+}
