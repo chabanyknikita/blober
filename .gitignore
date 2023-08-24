@@ -1,4 +1,3 @@
-.vscode/
 .idea/
 *.dev.*
 docs/node_modules
