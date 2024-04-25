@@ -31,5 +31,5 @@ jobs:
         uses: hiberbee/github-action-skaffold@latest
         id: build
         with:
-          command: build --tag ${{ github.ref }}
+          command: build --tag ${{ github.ref_name }}
           repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/${{ github.repository_owner }}
