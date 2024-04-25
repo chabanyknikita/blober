@@ -28,6 +28,12 @@ jobs:
           restore-keys: |
             skaffold-
 
+      - name: Run echo
+        run: |
+          echo ${{ env.SKAFFOLD_DEFAULT_REPO }}/$GITHUB_REPOSITORY_OWNER
+          echo $GITHUB_REPOSITORY_OWNER
+
+
       - name: Run Skaffold pipeline as command
         uses: hiberbee/github-action-skaffold@latest
         id: build
