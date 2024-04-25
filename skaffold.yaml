@@ -1,0 +1,8 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: "{{ .REGISTRY }}:latest"
+  artifacts:
+  - image: blober
