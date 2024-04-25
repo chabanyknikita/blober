@@ -31,12 +31,11 @@ jobs:
       - name: Run echo
         run: |
           echo ${{ env.SKAFFOLD_DEFAULT_REPO }}/$GITHUB_REPOSITORY_OWNER
-          echo $IMAGE_NAME
 
 
       - name: Run Skaffold pipeline as command
         uses: hiberbee/github-action-skaffold@latest
         id: build
         with:
-          command: build --tag $GITHUB_SHA
+          command: build --tag ${{ github.github_sha }}
           repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/${{ github.repository_owner }}
