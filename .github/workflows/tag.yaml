@@ -3,6 +3,9 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
+env:
+  SKAFFOLD_DEFAULT_REPO: registry.209.38.173.206.sslip.io
+
 jobs:
   converge:
     name: Skaffold Build
