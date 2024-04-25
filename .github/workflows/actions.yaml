@@ -37,5 +37,5 @@ jobs:
         uses: hiberbee/github-action-skaffold@latest
         id: build
         with:
-          command: build --tag ${{ github.github_sha }}
+          command: build --tag ${{ github.event.pull_request.head.sha }}
           repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/${{ github.repository_owner }}
