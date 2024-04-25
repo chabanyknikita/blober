@@ -38,5 +38,4 @@ jobs:
         id: build
         with:
           repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/${{ github.repository_owner }}
-          command: build
-          args: --tag ${{ github.event.pull_request.head.sha }}
+          command: build --tag ${{ github.sha }}
