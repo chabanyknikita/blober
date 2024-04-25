@@ -23,6 +23,7 @@ jobs:
           echo $GITHUB_REPOSITORY
           echo $GITHUB_SHA
           echo $GITHUB_REPOSITORY_OWNER
+          echo ${{ env.IMAGE_NAME }}
 
 
       # - name: Log in to registry
