@@ -1,10 +1,11 @@
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - 'main'
 
 env:
   SKAFFOLD_DEFAULT_REPO: registry.209.38.173.206.sslip.io
+  
 
 jobs:
   converge:
@@ -31,5 +32,5 @@ jobs:
         uses: hiberbee/github-action-skaffold@latest
         id: build
         with:
-          command: build --tag ${{ github.ref_name }}
+          command: build --tag ${{ github.sha }}
           repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/${{ github.repository_owner }}

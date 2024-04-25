@@ -1,7 +1,5 @@
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_dispatch:
 
 env:
   SKAFFOLD_DEFAULT_REPO: registry.209.38.173.206.sslip.io
