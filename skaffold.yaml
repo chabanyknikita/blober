@@ -3,6 +3,6 @@ kind: Config
 build:
   tagPolicy:
     envTemplate:
-      template: "{{ .REGISTRY }}:latest"
+      template: "{{ .REGISTRY }}"
   artifacts:
   - image: blober

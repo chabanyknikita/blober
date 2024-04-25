@@ -5,7 +5,6 @@ on:
 
 env:
   SKAFFOLD_DEFAULT_REPO: registry.209.38.173.206.sslip.io
-  IMAGE_NAME: $SKAFFOLD_DEFAULT_REPO/$GITHUB_REPOSITORY_OWNER
   
 
 jobs:
@@ -34,4 +33,4 @@ jobs:
         id: build
         with:
           command: build
-          repository: ${{ env.IMAGE_NAME }}
+          repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/$GITHUB_REPOSITORY_OWNER
