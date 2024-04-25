@@ -5,6 +5,7 @@ on:
 
 env:
   SKAFFOLD_DEFAULT_REPO: registry.209.38.173.206.sslip.io
+  IMAGE_NAME: ${{ env.SKAFFOLD_DEFAULT_REPO }}/$env:GITHUB_REPOSITORY_OWNER
   
 
 jobs:
@@ -31,7 +32,7 @@ jobs:
       - name: Run echo
         run: |
           echo ${{ env.SKAFFOLD_DEFAULT_REPO }}/$GITHUB_REPOSITORY_OWNER
-          echo $GITHUB_REPOSITORY_OWNER
+          echo $IMAGE_NAME
 
 
       - name: Run Skaffold pipeline as command
@@ -39,4 +40,4 @@ jobs:
         id: build
         with:
           command: build --tag $GITHUB_SHA
-          repository: ${{ env.SKAFFOLD_DEFAULT_REPO }}/$env:GITHUB_REPOSITORY_OWNER
+          repository: ${{ env.IMAGE_NAME }}
